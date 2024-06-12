@@ -1,6 +1,7 @@
 # app.py
 from flask import Flask, render_template, request, send_file
 from main import get_cell_value, write_to_excel
+from waitress import serve  # Import Waitress
 
 app = Flask(__name__)
 
@@ -23,12 +24,14 @@ def upload_file():
         # Define sheet names and cells to compare for each file
         sheet_name_file1 = 'NOC Checklist'
         sheet_name_file2 = 'Sheet1'
-        cells_to_compare_file1 = ['D3', 'C3', 'D7', 'C7']
-        cells_to_compare_file2 = ['B9', 'G9', 'C9', 'H9']
-        cells_to_compare_file1V1 = ['B14','C14','B15','D14']
-        cells_to_compare_file1V2 = ['A14','C15','A15','D15']
-        cells_to_compare_file2V1 = ['D9','Z8','AA8','AJ8','AK8','AQ8','AR8','BA8','BB8']
-        cells_to_compare_file2V2 = ['I9','Z9','AA9','AJ9','AK9','AQ9','AR9','BA9','BB9']
+        cells_to_compare_file1 = ['D3', 'C3', 'D7', 'C7']  # Cells from Sheet5 in file1
+        cells_to_compare_file2 = ['B9', 'G9', 'C9', 'H9']  # Cells from Sheet1 in file2
+
+        cells_to_compare_file1V1 = ['B14','C14','B15','D14']  # Cells from Sheet5 in file1
+        cells_to_compare_file1V2 = ['A14','C15','A15','D15']  # Cells from Sheet5 in file1
+
+        cells_to_compare_file2V1 = ['D9','Z8','AA8','AJ8','AK8','AQ8','AR8','BA8','BB8']  # Cells from Sheet1 in file2
+        cells_to_compare_file2V2 = ['I9','Z9','AA9','AJ9','AK9','AQ9','AR9','BA9','BB9']  # Cells from Sheet1 in file2
 
         # Retrieve cell values from files
         cell_value_file1 = get_cell_value(file1_path, sheet_name_file1, cells_to_compare_file1)
@@ -45,4 +48,4 @@ def upload_file():
         return send_file(output_filename, as_attachment=True)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    serve(app, host='0.0.0.0', port=8080)  # Run the app with Waitress on port 8080
