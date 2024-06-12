@@ -1,0 +1,19 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel File Upload</title>
+</head>
+<body>
+    <h1>Upload Excel Files</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file1" accept=".xlsx, .xls" required>
+        <br><br>
+        <input type="file" name="file2" accept=".xlsx, .xls" required>
+        <br><br>
+        <input type="submit" value="Compare and Download">
+    </form>
+</body>
+</html>
